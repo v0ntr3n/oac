@@ -173,33 +173,27 @@ async function writeLoadedCommitFile(hash, commitSha) {
 // ─── Default retryable error patterns ───────────────────────────────────────
 // Matched case-insensitively against "${errorName}: ${errorMessage}".
 // Override via config file's "errorPatterns" array.
-const DEFAULT_ERROR_PATTERNS = [
-    // API / provider errors (from DB: 63 occurrences)
-    "bad request",
+const DEFAULT_ERROR_PATTERNS = ["bad request",
     "reasoning_opaque",
     "prefill",
     "SSE read timed out",
     "DecimalError",
-    // Context / compaction errors (from DB: 7 occurrences)
     "ContextOverflowError",
     "too large to compact",
-    // Tool execution errors (from GitHub issues)
     "Invalid diff",
+    "已达到 Token Plan 用量上限：请升级 Token Plan 套餐或购买积分补充用量",
+    "expected array, received null",
     "Tool execution aborted",
     "JSON parsing failed",
     "Invalid input for tool",
     "tried to call unavailable tool",
     "finding less tool calls",
     "tool_use ids were found without tool_result",
-    // Connection errors (mid-stream, not initial connect)
     "ECONNREFUSED",
     "ECONNRESET",
-    // Stream / timeout errors
     "idle timeout",
     "no data received",
-    // Type / validation errors
-    "expected string, received undefined",
-];
+    "expected string, received undefined"];
 const DEFAULT_EXCLUDE_PATTERNS = [
     // User-initiated abort — never auto-continue
     "MessageAbortedError",
@@ -214,7 +208,7 @@ const DEFAULTS = {
     /** Delay after session.idle before sending continue */
     delayMs: 500,
     /** Max consecutive auto-continues per session before giving up (0 = unlimited) */
-    maxConsecutive: 5,
+    maxConsecutive: 0,
     /** Whether the plugin is enabled */
     enabled: true,
     /** Minimum ms between remote version checks */
